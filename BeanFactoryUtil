@@ -1,0 +1,43 @@
+package com.zuma.util;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+/**
+ * @ClassName: BeanFactoryUtil
+ * @Description: 依赖spring模块,获取spring bean 公共类
+ * @author wangshihai
+ * @date 2018年3月14日 下午8:39:29
+ */
+public class BeanFactoryUtil {
+	private static final BeanFactoryUtil instance =new BeanFactoryUtil();
+    private static ApplicationContext ctx =null;
+    
+    private BeanFactoryUtil() {}
+    
+    public static BeanFactoryUtil getInstance() { 
+        if(ctx==null) {
+        	String cfg[] =
+        		{	
+        				"application-root.xml"
+        		};
+            ctx =getApplicationContext(cfg);
+        }
+        return instance; 
+    }  
+    
+    public static BeanFactoryUtil getInstance(String[] cfg) { 
+        if(ctx==null) {
+            ctx =getApplicationContext(cfg);
+        }
+        return instance; 
+    }  
+    
+    public Object getBean(String beanId) {
+        return ctx.getBean(beanId);
+    }
+    
+    private static ApplicationContext getApplicationContext(String[] configureFiles) {
+        return new ClassPathXmlApplicationContext(configureFiles);
+    }
+}
