@@ -1,0 +1,40 @@
+package com.zuma.util;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+/**
+ * @ClassName: ObjectUtil
+ * @Description: 复制对象公共类
+ * @author wangshihai
+ * @date 2018年3月14日 下午8:42:32
+ */
+public class ObjectUtil {
+	
+	
+	/**
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @Title: convertToVo
+	 * @Description: 将对象转换为对应的VO对象
+	 * @param source
+	 * @param clazz
+	 * @return
+	 * @return Object 返回类型
+	 * @throws
+	 */
+	public static Object convertToVo(Object source, Class<?> clazz) {
+		Object target = null;
+		try {
+			target = clazz.newInstance();
+			if (source == null) {
+				return target;
+			}
+			BeanUtils.copyProperties(target, source);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return target;
+	}
+	
+}
