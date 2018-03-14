@@ -1,0 +1,67 @@
+package com.zuma.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+/**
+ * @ClassName: CopyList
+ * @Description: 利用BeanUtils 方法copylist集合
+ * @author wangshihai
+ * @date 2017年12月15日 上午9:21:19
+ */
+public class ListCopier<S, T> {
+	private Class<T> targetType;
+
+	public ListCopier(Class<T> targetType) {
+		this.targetType = targetType;
+	}
+
+	public List<T> copyList(List<S> src) {
+		List<T> target = new ArrayList<T>();
+		try {
+			for (S s : src) {
+				T t = targetType.newInstance();
+				BeanUtils.copyProperties(t, s);
+				target.add(t);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return target;
+	}
+	
+	public List<T> copyList(List<S> src, Class<T> targetClass) {
+		List<T> target = new ArrayList<T>();
+		try {
+			for (S s : src) {
+				T t = targetClass.newInstance();
+				BeanUtils.copyProperties(t, s);
+				target.add(t);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} // ctor.newInstance(args); clazz.getDeclaredConstructor()
+		return target;
+	}
+	
+	public static void main(String[] args) {
+		/*List<ShopVideoInfoBean> beans = new ArrayList<ShopVideoInfoBean>();
+		ShopVideoInfoBean b = new ShopVideoInfoBean();
+		b.setfId(3L);
+		b.setfAliasName("123");
+		b.setfUpdateTime(new Date());
+		
+		beans.add(b);
+		ListCopier lc = new ListCopier(ShopVideoInfoVo.class);
+		List<ShopVideoInfoVo> t = lc.copyList(beans);
+		System.out.println(t.get(0).getfUpdateTime());
+		
+		ShopVideoInfoVo vo = (ShopVideoInfoVo) ObjectUtil.convertToVo(b, ShopVideoInfoVo.class);
+		System.out.println(vo.getfUpdateTime());*/
+		
+	}
+
+}
